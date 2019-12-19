@@ -55,7 +55,7 @@ int main()
 
 
 	Image map_image;//объект изображения для карты 
-	map_image.loadFromFile("images/map6.png");//загружаем файл для карты
+	map_image.loadFromFile("images/Lanshaft 555.png");//загружаем файл для карты
 	
 	Texture map;//текстура карты 
 	map.loadFromImage(map_image);//заряжаем текстуру картинкой
@@ -67,7 +67,7 @@ int main()
 	int gameTime = 0;//объявили игровое время, инициализировали.
 
 	Image PackmanImage;
-	PackmanImage.loadFromFile("images/Pakman1.png"); // загружаем изображение игрока
+	PackmanImage.loadFromFile("images/Pacman.png"); // загружаем изображение игрока
 
 	Pacman p(PackmanImage, 80, 80, 40.0, 40.0,"Packman");//создаем объект p класса player, задаем "hero.png" как имя файла+расширение, далее координата Х,У, ширина, высота.
 	
