@@ -7,7 +7,7 @@ std::string TileMap[HEIGHT_MAP] =
 	"0ss  f ssss  sss s 0",
 	"0s     hsss      s 0",
 	"0  sss  hhhh  s  s 0", 
-	"0   s     sss    s 0", 
+	"0   s     sss s  s 0", 
 	"0s    s   sss s    0",
 	"0s   ss  h s  ss   0",
 	"0s  sss      ssss  0", 

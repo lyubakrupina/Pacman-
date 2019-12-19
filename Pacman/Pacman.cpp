@@ -40,7 +40,51 @@ using namespace sf;
 			state = down;
 			speed = 0.1;//направление вниз
 		}
-		
+		if ((Keyboard::isKeyPressed(Keyboard::Down))&(Keyboard::isKeyPressed(Keyboard::Left)))
+		{
+			state = stay;
+			speed = 0;
+			dx=0;
+			dy=0;
+		}
+		if ((Keyboard::isKeyPressed(Keyboard::Down))&(Keyboard::isKeyPressed(Keyboard::Right)))
+		{
+			state = stay;
+			speed = 0;
+			dx=0;
+			dy=0;
+
+		}
+		if ((Keyboard::isKeyPressed(Keyboard::Up))&(Keyboard::isKeyPressed(Keyboard::Left)))
+		{
+			state = stay;
+			speed = 0;
+			dx=0;
+			dy=0;
+
+		}
+		if ((Keyboard::isKeyPressed(Keyboard::Up))&(Keyboard::isKeyPressed(Keyboard::Right)))
+		{
+			state = stay;
+			speed = 0;
+			dx=0;
+			dy=0;
+
+		}
+		if ((Keyboard::isKeyPressed(Keyboard::Down))&(Keyboard::isKeyPressed(Keyboard::Up)))
+		{
+			state = stay;
+			speed = 0;
+			dx=0;
+			dy=0;
+		}
+		if ((Keyboard::isKeyPressed(Keyboard::Right))&(Keyboard::isKeyPressed(Keyboard::Left)))
+		{
+			state = stay;
+			speed = 0;
+			dx=0;
+			dy=0;
+		}
 	}
 	
 	//Метод проверки столкновений с элементами карты 
