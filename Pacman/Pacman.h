@@ -9,10 +9,10 @@ using namespace sf;
 ////////////////////////////////////////////////////КЛАСС Pacman///////////////////////
 class Pacman:public Entity { // класс Pacman
 public:
-	int playerScore;//эта переменная может быть только у игрока
+	int pacmanScore;//эта переменная может быть только у игрока
 
 	Pacman(Image &image, float X, float Y, int W, int H, std::string Name);
-		
+	~Pacman();
 	void control();
 	
 	//Метод проверки столкновений с элементами карты 

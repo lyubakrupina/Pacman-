@@ -54,11 +54,11 @@ int main()
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 	sf::RenderWindow window(sf::VideoMode(800, 600, desktop.bitsPerPixel), "Pacman");
 
-	Font font;
-	font.loadFromFile("Cyrilicold.ttf");
-	Text text("",font,20);
-	text.setColor(Color::Red);//покрасили текст в красный 
-	text.setStyle(Text::Bold);//жирный текст. 
+	//Font font;
+	//font.loadFromFile("Cyrilicold.ttf");
+	//Text text("",font,20);
+	//text.setColor(Color::Red);//покрасили текст в красный 
+	//text.setStyle(Text::Bold);//жирный текст. 
  
  
 
@@ -74,7 +74,15 @@ int main()
 	Clock clock; //создаем переменную времени и одновременно запускаем часы!
 	Clock gameTimeClock;//переменна€ игрового времени, будем здесь хранить врем€ игры 
 	int gameTime = 0;//объ€вили игровое врем€, инициализировали.
+	
+	Image PacmanImage;
+	PacmanImage.loadFromFile("images/Pacman.png"); // загружаем изображение игрока
+	
+	Image EnemyImageSh1;
+	EnemyImageSh1.loadFromFile("images/PSH1.png");
 
+	Pacman p(PacmanImage, 80, 80, 40.0, 40.0,"Packman");//создаем объект p класса player, задаем "hero.png" как им€ файла+расширение, далее координата ’,”, ширина, высота.
+	//Enemy Psh1(EnemyImageSh1, 40, 40, 40.0, 40.0,"PSH1");
 	std::list<Entity*> enemies;
 	std::list<Entity*>::iterator it;
 
@@ -84,28 +92,28 @@ int main()
 	for (int i = 0; i < ENEMY_COUNT; i++) 
 		{ 
 			float xr = 150 + rand() % 500; // случайна€ координата врага на поле игры по оси УxФ 
-			float yr = 150 + rand() % 350; // случайна€ координата врага на поле игры по оси УyФ  //создаем врагов и помещаем в список  
-			enemies.push_back(new Enemy(EnemyImageSh1, xr, yr, 96, 96, "PSH1"));  
-	
+			float yr = 150 + rand() % 350; // случайна€ координата врага на поле игры по оси УyФ  
+			//создаем врагов и помещаем в список  
+			enemies.push_back(new Enemy(EnemyImageSh1, xr, yr, 40, 40, "EnemyImageSh1"));  
 			enemiesCount += 1; //увеличили счЄтчик врагов 
 	} 
 
 
-	Image PackmanImage;
-	Image EnemyImageSh1;
-	Image EnemyImageSh2;
-	Image EnemyImageSh3;
-
-	PackmanImage.loadFromFile("images/Pacman.png"); // загружаем изображение игрока
-	EnemyImageSh1.loadFromFile("images/PSH1.png");
-	EnemyImageSh2.loadFromFile("images/PSH2.png");
-	EnemyImageSh3.loadFromFile("images/PSH3.png");
-
-	Pacman p(PackmanImage, 80, 80, 40.0, 40.0,"Packman");//создаем объект p класса player, задаем "hero.png" как им€ файла+расширение, далее координата ’,”, ширина, высота.
 	
-	Enemy Psh1(EnemyImage, 80, 80, 40.0, 40.0,"PSH1");
-	Enemy Psh2(EnemyImage, 80, 80, 40.0, 40.0,"PSH2");
-	Enemy Psh3(EnemyImage, 80, 80, 40.0, 40.0,"PSH3");
+	
+	//Image EnemyImageSh2;
+	//Image EnemyImageSh3;
+
+	
+	
+	//EnemyImageSh2.loadFromFile("images/PSH2.png");
+	//EnemyImageSh3.loadFromFile("images/PSH3.png");
+
+	
+	
+	//Enemy Psh1(EnemyImage, 80, 80, 40.0, 40.0,"PSH1");
+	//Enemy Psh2(EnemyImage, 80, 80, 40.0, 40.0,"PSH2");
+	//Enemy Psh3(EnemyImage, 80, 80, 40.0, 40.0,"PSH3");
 
 
 	int createObjectForMapTimer = 0;//ѕеременна€ под врем€ дл€ генерировани€ камней
@@ -113,6 +121,9 @@ int main()
 	while (window.isOpen())
 	{
 		float time = clock.getElapsedTime().asMicroseconds();
+		if (p.life) gameTime = gameTimeClock.getElapsedTime().asSeconds();//игровое врем€ в 
+		//секундах идЄт вперед, пока жив игрок. ѕерезагружать как time его не надо. 
+		//оно не обновл€ет логику игры
 		clock.restart(); 
 		time = time / 800;
 
@@ -147,13 +158,13 @@ int main()
 				(*it)->update(time); //запускаем метод update()  
 			} 
 
-		if (p.life == true)
-			{//если игрок жив  
-				for (it = enemies.begin(); it != enemies.end(); it++)
-					{//бежим по списку врагов   
-						if ((p.getRect().intersects((*it)->getRect())) && ((*it)->name == "EasyEnemy"))     
-							{      
-								p.health = 0;      
+	if (p.life == true)
+	{//если игрок жив  
+		for (it = enemies.begin(); it != enemies.end(); it++)
+				{//бежим по списку врагов   
+					if ((p.getRect().intersects((*it)->getRect())) && ((*it)->name == "Psh1"))     
+						{      
+							p.health = 0;      
 								std::cout << "you are lose";     
 							}    
 					}   
@@ -189,11 +200,13 @@ int main()
 		window.draw(p.sprite);//выводим спрайт на экран
 		
 		for (it = enemies.begin(); it != enemies.end(); it++)
-			{ 
-				window.draw((*it)->sprite); //рисуем enemies объекты 
+		{ 
+			//if ((*it)->life) //если враги живы
+			window.draw((*it)->sprite); //рисуем enemies объекты 
 			}
 		
 		window.display(); 
 	}
 return 0;
+
 }

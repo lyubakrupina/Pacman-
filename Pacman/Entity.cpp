@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include <iostream>
 using namespace sf;
+using namespace std;
 	Entity::Entity(Image &image, float X, float Y, int W, int H, std::string Name){ 
 		x = X; y = Y; //координата появления спрайта
 		w = W; h = H;
@@ -10,6 +12,11 @@ using namespace sf;
 		texture.loadFromImage(image); //заносим наше изображение в текстуру 
 		sprite.setTexture(texture); //заливаем спрайт текстурой 
 	}
+
+	Entity::~Entity(){
+		cout<<"udalilas sysnost";
+		system("pause");
+		}
 
 	FloatRect Entity:: getRect(){
 		//метод получения прямоугольника. его коорд, размеры (шир,высот).
