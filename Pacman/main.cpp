@@ -3,6 +3,7 @@
 #include <sstream>
 #include "Entity.h"
 #include "Pacman.h"
+#include "Enemy.h"
 #include "map.h" //подключили код с картой
 #include <list>
 using namespace sf;//включаем пространство имен sf, чтобы посто€нно не писать sf::
@@ -53,6 +54,14 @@ int main()
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 	sf::RenderWindow window(sf::VideoMode(800, 600, desktop.bitsPerPixel), "Pacman");
 
+	Font font;
+	font.loadFromFile("Cyrilicold.ttf");
+	Text text("",font,20);
+	text.setColor(Color::Red);//покрасили текст в красный 
+	text.setStyle(Text::Bold);//жирный текст. 
+ 
+ 
+
 
 	Image map_image;//объект изображени€ дл€ карты 
 	map_image.loadFromFile("images/Lanshaft 555.png");//загружаем файл дл€ карты
@@ -66,11 +75,39 @@ int main()
 	Clock gameTimeClock;//переменна€ игрового времени, будем здесь хранить врем€ игры 
 	int gameTime = 0;//объ€вили игровое врем€, инициализировали.
 
+	std::list<Entity*> enemies;
+	std::list<Entity*>::iterator it;
+
+	const int ENEMY_COUNT = 3; //максимальное количество врагов в игре 
+	int enemiesCount = 0; 
+
+	for (int i = 0; i < ENEMY_COUNT; i++) 
+		{ 
+			float xr = 150 + rand() % 500; // случайна€ координата врага на поле игры по оси УxФ 
+			float yr = 150 + rand() % 350; // случайна€ координата врага на поле игры по оси УyФ  //создаем врагов и помещаем в список  
+			enemies.push_back(new Enemy(EnemyImageSh1, xr, yr, 96, 96, "PSH1"));  
+	
+			enemiesCount += 1; //увеличили счЄтчик врагов 
+	} 
+
+
 	Image PackmanImage;
+	Image EnemyImageSh1;
+	Image EnemyImageSh2;
+	Image EnemyImageSh3;
+
 	PackmanImage.loadFromFile("images/Pacman.png"); // загружаем изображение игрока
+	EnemyImageSh1.loadFromFile("images/PSH1.png");
+	EnemyImageSh2.loadFromFile("images/PSH2.png");
+	EnemyImageSh3.loadFromFile("images/PSH3.png");
 
 	Pacman p(PackmanImage, 80, 80, 40.0, 40.0,"Packman");//создаем объект p класса player, задаем "hero.png" как им€ файла+расширение, далее координата ’,”, ширина, высота.
 	
+	Enemy Psh1(EnemyImage, 80, 80, 40.0, 40.0,"PSH1");
+	Enemy Psh2(EnemyImage, 80, 80, 40.0, 40.0,"PSH2");
+	Enemy Psh3(EnemyImage, 80, 80, 40.0, 40.0,"PSH3");
+
+
 	int createObjectForMapTimer = 0;//ѕеременна€ под врем€ дл€ генерировани€ камней
 	int createObjectForMapTimer1 = 0;//ѕеременна€ под врем€ дл€ генерировани€ камней
 	while (window.isOpen())
@@ -103,7 +140,25 @@ int main()
 		
 		
 		
-		p.update(time); //оживл€ем объект УpФ класса УPlayerФ с помощью времени sfml, // передава€ врем€ в качестве параметра функции update.
+		p.update(time);//оживл€ем объект УpФ класса УPlayerФ с помощью времени sfml, // передава€ врем€ в качестве параметра функции update.
+		
+		for  (it = enemies.begin(); it != enemies.end(); it++)   
+			{   
+				(*it)->update(time); //запускаем метод update()  
+			} 
+
+		if (p.life == true)
+			{//если игрок жив  
+				for (it = enemies.begin(); it != enemies.end(); it++)
+					{//бежим по списку врагов   
+						if ((p.getRect().intersects((*it)->getRect())) && ((*it)->name == "EasyEnemy"))     
+							{      
+								p.health = 0;      
+								std::cout << "you are lose";     
+							}    
+					}   
+			} 
+		
 		window.clear(); 
 
 		/////////////////////////////–исуем карту/////////////////////
@@ -119,7 +174,7 @@ int main()
 					if ((TileMap[i][j] == '0')) 
 						s_map.setTextureRect(IntRect(80, 0, 40, 40));//если
 					//встретили символ 0, то рисуем 3й квадратик
-				if ((TileMap[i][j] == 'f')) 
+					if ((TileMap[i][j] == 'f')) 
 				
 					s_map.setTextureRect(IntRect(120, 0, 40, 40));
 					
@@ -132,6 +187,12 @@ int main()
 
 
 		window.draw(p.sprite);//выводим спрайт на экран
+		
+		for (it = enemies.begin(); it != enemies.end(); it++)
+			{ 
+				window.draw((*it)->sprite); //рисуем enemies объекты 
+			}
+		
 		window.display(); 
 	}
 return 0;

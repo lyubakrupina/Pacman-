@@ -3,7 +3,8 @@
 using namespace sf;
 
 		Pacman::Pacman(Image &image, float X, float Y, int W, int H, std::string Name) :Entity(image, X, Y, W, H, Name){
-		playerScore = 0; state = stay;
+		playerScore = 0; 
+		state = stay;
 		//if (name == "Packman"){ 
 			//Задаем спрайту один прямоугольник для //вывода одного игрока. IntRect – для приведения типов 
 			//image.createMaskFromColor(Color(255, 255, 255));
