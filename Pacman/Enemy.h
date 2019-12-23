@@ -12,7 +12,7 @@ public:
 	
 	Enemy(Image &image, float X, float Y, int W, int H, std::string Name);
 		
-	//void control(); не нужен
+	
 	
 	//Метод проверки столкновений с элементами карты 
 	void checkCollisionWithMap(float Dx, float Dy);

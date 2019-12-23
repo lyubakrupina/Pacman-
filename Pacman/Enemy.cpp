@@ -1,11 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
+#include "Bullet.h"
 using namespace sf;
 
 		Enemy::Enemy(Image &image, float X, float Y, int W, int H, std::string Name) :Entity(image, X, Y, W, H, Name){
 		
-		if (name == "Packman")
-		{ 
+		//if (name == "Psh1")
+		//{ 
 			//«адаем спрайту один пр€моугольник дл€ //вывода одного игрока. IntRect Ц дл€ приведени€ типов 
 			//image.createMaskFromColor(Color(255, 255, 255));
 		//image.createMaskFromColor(Color(0, 0, 0));
@@ -13,47 +14,47 @@ using namespace sf;
 			sprite.setTextureRect(IntRect(0, 0, w, h)); 
 			direction = rand() % (3);
 			
-			speed = 0.1
-				dx = speed
-		}
+			speed = 0.05;
+				dx = speed;
+		//}
 	}
-	void checkCollisionWithMap (float Dx, float Dy)
+	void Enemy::checkCollisionWithMap (float Dx, float Dy)
 	{
-		for (int i = y / 32; i < (y + h) / 32; i++)//проходимс€ по элементам карты    
-			for (int j = x / 32; j<(x + w) / 32; j++) 
+		for (int i = y / 40; i < (y + h) / 40; i++)//проходимс€ по элементам карты    
+			for (int j = x / 40; j<(x + w) / 40; j++) 
  
-		{     if (TileMap[i][j] == '0')//если элемент - тайлик земли    
+		{     if ((TileMap[i][j] == '0')||(TileMap[i][j] == 's'))//если элемент - тайлик земли    
 				{      if (Dy > 0) 
 						{      
-							y = i * 32 - h; 
-							dy = -0.1;        
+							y = i * 40 - h; 
+							dy = -0.05;        
 							direction = rand() % (3); //Ќаправление движени€ врага       
 						}//по Y       
 					   if (Dy < 0) 
 						{		
-							y = i * 32 + 32; 
-							dy = 0.1;        
+							y = i * 40 + 40; 
+							dy = 0.05;        
 							direction = rand() % (3);//Ќаправление движени€ врага        
 						}//столкновение с верхними кра€ми       
 					   if (Dx > 0) 
 						{       
-							x = j * 32 - w; 
-							dx = -0.1;        
+							x = j * 40 - w; 
+							dx = -0.05;        
 							direction = rand() % (3);//Ќаправление движени€ врага        
 						}//с правым краем карты      
 					   if (Dx < 0) 
 						{       
-							x = j * 32 + 32; 
-							dx = 0.1;        
+							x = j * 40 + 40; 
+							dx = 0.05;        
 							direction = rand() % (3); //Ќаправление движени€ врага       
 					   }// с левым краем карты     
 				}    
 		}  
 	}
-	void update(float time)  
+	void Enemy::update(float time)  
 	{   
-		if (name == "EasyEnemy")
-		{//дл€ персонажа с таким именем логика будет такой 
+		//if (name == "EasyEnemy")
+		//{//дл€ персонажа с таким именем логика будет такой 
  
 		if (life) 
 		{//провер€ем, жив ли герой   
@@ -64,7 +65,7 @@ using namespace sf;
 						dx = speed;   
 						CurrentFrame += 0.005*time;   
 						if (CurrentFrame > 3) CurrentFrame -= 3;  
-						sprite.setTextureRect(IntRect(96 * int(CurrentFrame), 192, 96, 96));   
+						sprite.setTextureRect(IntRect(40 * int(CurrentFrame), 0, 40, 40));   
 						break;  
 					}   
 				case 1:
@@ -72,7 +73,7 @@ using namespace sf;
 						dx = -speed;   
 						CurrentFrame += 0.005*time;  
 						if (CurrentFrame > 3) CurrentFrame -= 3;   
-						sprite.setTextureRect(IntRect(96 * int(CurrentFrame), 96, 96, 96));  
+						sprite.setTextureRect(IntRect(40 * int(CurrentFrame), 40, 40, 40));  
 						break;   
 					}   
 				case 2:
@@ -80,7 +81,7 @@ using namespace sf;
 						dy = -speed;   
 						CurrentFrame += 0.005*time;  
 						if (CurrentFrame > 3) CurrentFrame -= 3;  
-						sprite.setTextureRect(IntRect(96 * int(CurrentFrame), 288, 96, 96)); 
+						sprite.setTextureRect(IntRect(40 * int(CurrentFrame), 80, 40, 40)); 
 						break;  
 					}   
 				case 3:
@@ -88,7 +89,7 @@ using namespace sf;
 						dy = speed;  
 						CurrentFrame += 0.005*time;  
 						if (CurrentFrame > 3) CurrentFrame -= 3;   
-						sprite.setTextureRect(IntRect(96 * int(CurrentFrame), 0, 96, 96));  
+						sprite.setTextureRect(IntRect(40 * int(CurrentFrame), 120, 40, 40));  
 						break;   
 					}  
 			} 
@@ -107,6 +108,6 @@ using namespace sf;
 		{ 
 			life = false;
 		}//если жизней меньше 0, либо равно 0, то умираем  
-	}  
+//	}  
 	} 
 	} //класс Enemy закрыт 
