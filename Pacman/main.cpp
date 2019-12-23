@@ -203,17 +203,17 @@ int main()
 								std::cout << "you are lose";  
 							}    
 					}   
-				for (it = enemies.begin(); it != enemies.end(); it++)
-				{
-					if ((Bullets.getRect().intersects((*it)->getRect()))) //&&(enemies.getRect().intersecrs((*it)->getRect()))))) 
-					{
-						p.health = 0;
-						p.life = false;
-						std::cout << "you are lose";
+				//for (it = enemies.begin(); it != enemies.end(); it++)
+			//	{
+			//		if ((Bullets.getRect().intersects((*it)->getRect()))) //&&(enemies.getRect().intersecrs((*it)->getRect()))))) 
+			//		{
+			//			p.health = 0;
+			//			p.life = false;
+			//			std::cout << "you are lose";
 						
-					}
+			//		}
 				
-				}
+			//	}
 			} 
 		
 		window.clear(); 
